@@ -1,0 +1,16 @@
+{
+    "$schema": "https://json.schemastore.org/launchsettings.json",
+    "profiles": {
+        "Console": {
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "launchBrowser": true,
+            "launchUrl": "swagger",
+            "applicationUrl": "http://localhost:5001",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "JWT_KEY": "0f34bb9b192542b785622e46de4931bc"
+            }
+        }
+    }
+}
