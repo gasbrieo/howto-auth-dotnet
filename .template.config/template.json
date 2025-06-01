@@ -17,6 +17,21 @@
       "replaces": "howto-auth-dotnet",
       "defaultValue": "howto-auth-dotnet"
     }
-  }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            "**/.git/**",
+            "**/.vs/**",
+            "**/bin/**",
+            "**/obj/**",
+            "**/.db/**"
+          ]
+        }
+      ]
+    }
+  ]
 }
 
