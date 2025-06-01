@@ -1,6 +1,6 @@
 using HowTo.Auth.UseCases.Auth.Login;
 using HowTo.Auth.UseCases.Auth.Register;
-using HowTo.Auth.UseCases.Me.GetCurrentUser;
+using HowTo.Auth.UseCases.Users.GetCurrentUser;
 
 namespace HowTo.Auth.UseCases;
 

@@ -1,4 +1,4 @@
-﻿namespace HowTo.Auth.Presentation.Configurations.SwaggerOptions;
+namespace HowTo.Auth.Presentation.Docs.OpenApi;
 
 public class ConfigureSecurityOptions : IConfigureOptions<SwaggerGenOptions>
 {

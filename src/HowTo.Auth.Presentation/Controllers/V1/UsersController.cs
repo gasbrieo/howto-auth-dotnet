@@ -1,15 +1,13 @@
-using System.Security.Claims;
 using HowTo.Auth.UseCases.Common;
-using HowTo.Auth.UseCases.Me.GetCurrentUser;
-using Microsoft.AspNetCore.Authorization;
+using HowTo.Auth.UseCases.Users.GetCurrentUser;
 
 namespace HowTo.Auth.Presentation.Controllers.V1;
 
 [Authorize]
-public class MeController(IGetCurrentUserUseCase getCurrentUserUseCase) : BaseController
+public class UsersController(IGetCurrentUserUseCase getCurrentUserUseCase) : BaseController
 {
-    [HttpGet]
-    [ProducesResponseType(typeof(GetCurrentUserResponse), StatusCodes.Status200OK)]
+    [HttpGet("me")]
+    [ProducesResponseType(typeof(PagedList<GetCurrentUserRequest>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetCurrentUser(CancellationToken cancellationToken)
     {

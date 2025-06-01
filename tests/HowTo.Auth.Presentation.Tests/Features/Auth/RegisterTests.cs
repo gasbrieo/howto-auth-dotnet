@@ -3,7 +3,7 @@ using HowTo.Auth.UseCases.Auth.Register;
 
 namespace HowTo.Auth.Presentation.Tests.Features.Auth;
 
-public class RegisterTests(FunctionalTestFixture fixture) : IClassFixture<FunctionalTestFixture>, IDisposable
+public class RegisterTests(FunctionalTestFixture fixture) : IClassFixture<FunctionalTestFixture>
 {
     private readonly HttpClient _client = fixture.CreateClient();
 
@@ -36,11 +36,5 @@ public class RegisterTests(FunctionalTestFixture fixture) : IClassFixture<Functi
         // Then
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         Assert.NotNull(result);
-    }
-
-    public void Dispose()
-    {
-        fixture.ReinitializeDatabase();
-        GC.SuppressFinalize(this);
     }
 }

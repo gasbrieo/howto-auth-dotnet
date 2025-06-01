@@ -1,6 +1,6 @@
 using HowTo.Auth.UseCases.Common;
 
-namespace HowTo.Auth.UseCases.Me.GetCurrentUser;
+namespace HowTo.Auth.UseCases.Users.GetCurrentUser;
 
 public interface IGetCurrentUserUseCase
 {

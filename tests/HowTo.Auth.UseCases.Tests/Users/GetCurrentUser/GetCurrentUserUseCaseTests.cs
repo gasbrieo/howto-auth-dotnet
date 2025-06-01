@@ -1,9 +1,9 @@
 using HowTo.Auth.Core.Entities;
 using HowTo.Auth.Core.Interfaces;
 using HowTo.Auth.UseCases.Common;
-using HowTo.Auth.UseCases.Me.GetCurrentUser;
+using HowTo.Auth.UseCases.Users.GetCurrentUser;
 
-namespace HowTo.Auth.UseCases.Tests.Me.GetCurrentUser;
+namespace HowTo.Auth.UseCases.Tests.Users.GetCurrentUser;
 
 public class GetCurrentUserUseCaseTests
 {

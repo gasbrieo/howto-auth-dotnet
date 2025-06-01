@@ -1,35 +1,32 @@
-using HowTo.Auth.Presentation.Configurations;
+using HowTo.Auth.Presentation.Docs;
+using HowTo.Auth.Presentation.Extensions;
 using HowTo.Auth.Presentation.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.AddLoggerConfigs();
+builder.Host.UseSerilogWithDefaults();
 
-builder.Services.AddControllersConfigs();
-builder.Services.AddServiceConfigs(builder.Configuration);
-builder.Services.AddSwaggerConfigs();
-builder.Services.AddIdentityConfigs(builder.Configuration);
-builder.Services.AddCorsConfigs();
+builder.Services.AddEndpointConfigurations();
+builder.Services.AddServiceConfigurations(builder.Configuration);
+builder.Services.AddSwaggerConfigurations();
+builder.Services.AddIdentityConfigurations();
+builder.Services.AddAuthenticationConfigurations(builder.Configuration);
+builder.Services.AddCorsConfigurations();
+builder.Services.AddHealthCheckConfigurations();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
 
-app.UseLoggerConfigs();
-app.MapControllers();
+app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerConfigs();
-    app.UseCorsConfigs();
+    app.UseSwaggerWithUI();
+    app.UseCorsConfigurations();
 }
 
 app.UseExceptionHandler(_ => { });
+app.UseHealthCheckEndpoints();
+app.MapControllers();
 
 await app.RunAsync();
-
-namespace HowTo.Auth.Presentation
-{
-    public partial class Program
-    {
-    }
-}

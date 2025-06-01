@@ -18,6 +18,7 @@ Basic example of authentication and authorization using ASP.NET Core Identity an
 - Error responses with `ProblemDetails`
 - Functional, integration and unit tests
 - Swagger with token support
+- Health checks endpoints (liveness/readiness) for monitoring
 - CI workflow with SonarCloud
 
 ---
@@ -28,7 +29,9 @@ Basic example of authentication and authorization using ASP.NET Core Identity an
 |--------|------------------|------|----------------------|
 | POST   | `/auth/register` | ❌   | Register new user    |
 | POST   | `/auth/login`    | ❌   | Login and get token  |
-| GET    | `/me`            | ✅   | Get current user     |
+| GET    | `/users/me`            | ✅   | Get current user     |
+| GET    | `/health/liveness`  | ❌   | Checks if the application is running |
+| GET    | `/health/readiness` | ❌   | Checks if the application and its dependencies are healthy |
 
 ---
 

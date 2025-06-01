@@ -1,9 +1,9 @@
 using HowTo.Auth.Infrastructure.Data;
-using Microsoft.Extensions.Configuration;
+using HowTo.Auth.Presentation.Tests.TestHelpers.Extensions;
 
 namespace HowTo.Auth.Presentation.Tests.TestHelpers;
 
-public class FunctionalTestFixture : WebApplicationFactory<Program>, IDisposable
+public class FunctionalTestFixture : WebApplicationFactory<IPresentationMarker>, IDisposable
 {
     private readonly SqliteConnection _sqliteConnection;
 
@@ -19,20 +19,19 @@ public class FunctionalTestFixture : WebApplicationFactory<Program>, IDisposable
         {
             Environment.SetEnvironmentVariable("JWT_KEY", StaticTokenService.SecretKey);
 
-            var config = new Dictionary<string, string?>
+            configBuilder.AddInMemoryCollection(new Dictionary<string, string?>
             {
-                ["JWT_KEY"] = StaticTokenService.SecretKey,
                 ["Jwt:Issuer"] = StaticTokenService.Issuer,
                 ["Jwt:Audience"] = StaticTokenService.Audience
-            };
-
-            configBuilder.AddInMemoryCollection(config);
+            });
         });
 
         builder.ConfigureServices(services =>
         {
-            FakeAuthentication(services);
-            FakeDbContext(services);
+            services
+                .AddFakeHealthChecks()
+                .AddFakeAuthentication()
+                .AddFakeDbContext(_sqliteConnection);
         });
 
         builder.ConfigureServices((context, services) =>
@@ -41,52 +40,6 @@ public class FunctionalTestFixture : WebApplicationFactory<Program>, IDisposable
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             dbContext.Database.EnsureCreated();
         });
-    }
-
-    private static void FakeAuthentication(IServiceCollection services)
-    {
-        var authDescriptors = services
-            .Where(s => s.ServiceType == typeof(IConfigureOptions<AuthenticationOptions>))
-            .ToList();
-
-        foreach (var descriptor in authDescriptors)
-        {
-            services.Remove(descriptor);
-        }
-
-        services
-            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = StaticTokenService.Issuer,
-                    ValidAudience = StaticTokenService.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(StaticTokenService.SecretKey))
-                };
-            });
-
-        services.AddAuthorization();
-    }
-
-    private void FakeDbContext(IServiceCollection services)
-    {
-        var descriptorsToRemove = services
-            .Where(s => s.ServiceType == typeof(ApplicationDbContext) ||
-                        s.ServiceType == typeof(DbContextOptions<ApplicationDbContext>))
-            .ToList();
-
-        foreach (var descriptor in descriptorsToRemove)
-        {
-            services.Remove(descriptor);
-        }
-
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite(_sqliteConnection));
     }
 
     public void ReinitializeDatabase()
@@ -104,3 +57,4 @@ public class FunctionalTestFixture : WebApplicationFactory<Program>, IDisposable
         GC.SuppressFinalize(this);
     }
 }
+

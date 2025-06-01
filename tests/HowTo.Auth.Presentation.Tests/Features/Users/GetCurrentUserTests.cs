@@ -1,16 +1,16 @@
 using HowTo.Auth.Presentation.Tests.TestHelpers;
 using HowTo.Auth.UseCases.Auth.Login;
 using HowTo.Auth.UseCases.Auth.Register;
-using HowTo.Auth.UseCases.Me.GetCurrentUser;
+using HowTo.Auth.UseCases.Users.GetCurrentUser;
 
-namespace HowTo.Auth.Presentation.Tests.Features.Me;
+namespace HowTo.Auth.Presentation.Tests.Features.Users;
 
-public class GetCurrentUserTests(FunctionalTestFixture fixture) : IClassFixture<FunctionalTestFixture>, IDisposable
+public class GetCurrentUserTests(FunctionalTestFixture fixture) : IClassFixture<FunctionalTestFixture>
 {
     private readonly HttpClient _client = fixture.CreateClient();
 
     [Fact]
-    public async Task GivenValidToken_WhenMeCalled_ThenReturnsOk()
+    public async Task GivenValidToken_WhenGetCurrentUserCalled_ThenReturnsOk()
     {
         // Given
         var registerRequest = new RegisterUserRequest { Email = "test@example.com", Password = "Test@123" };
@@ -23,7 +23,7 @@ public class GetCurrentUserTests(FunctionalTestFixture fixture) : IClassFixture<
         _client.DefaultRequestHeaders.Authorization = new("Bearer", loginResult!.Token);
 
         // When
-        var meResponse = await _client.GetAsync("/api/v1/me");
+        var meResponse = await _client.GetAsync("/api/v1/users/me");
         var meResult = await meResponse.Content.ReadFromJsonAsync<GetCurrentUserResponse>();
 
         // Then
@@ -33,21 +33,15 @@ public class GetCurrentUserTests(FunctionalTestFixture fixture) : IClassFixture<
     }
 
     [Fact]
-    public async Task GivenNoToken_WhenMeCalled_ThenReturnsUnauthorized()
+    public async Task GivenNoToken_WhenGetCurrentUserCalled_ThenReturnsUnauthorized()
     {
         // Given
         _client.DefaultRequestHeaders.Authorization = null;
 
         // When
-        var response = await _client.GetAsync("/api/v1/me");
+        var response = await _client.GetAsync("/api/v1/users/me");
 
         // Then
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
-    }
-
-    public void Dispose()
-    {
-        fixture.ReinitializeDatabase();
-        GC.SuppressFinalize(this);
     }
 }
