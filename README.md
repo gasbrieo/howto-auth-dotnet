@@ -1,92 +1,39 @@
-# HowTo Auth (.NET)
+# HowTo.Auth.DotNet
 
-This project demonstrates how to implement modern authentication in ASP.NET Core using **Microsoft Identity** with **JWT Bearer tokens**, following Clean Architecture principles.
+![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/gasbrieo_howto-auth-dotnet?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)
+![Sonar Coverage](https://img.shields.io/sonar/coverage/gasbrieo_howto-auth-dotnet?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/gasbrieo/howto-auth-dotnet?style=for-the-badge)
+![GitHub Release](https://img.shields.io/github/v/release/gasbrieo/howto-auth-dotnet?style=for-the-badge)
 
-It is part of a series of practical authentication implementations across multiple stacks.
+## Overview
 
----
-
-## 🔐 Features
-
-- ASP.NET Core 8 with Identity
-- JWT token generation and validation
-- Role-based authorization
-- Clean Architecture (Core, UseCases, Infrastructure, Presentation)
-- FluentValidation for request validation
-- Swagger (OpenAPI) with JWT support
-- xUnit integration and unit testing
-- SQLite (in-memory or file-based) support
+Basic example of authentication and authorization using ASP.NET Core Identity and JWT in .NET 9. Clean structure and tests included.
 
 ---
 
-## 📦 Project Structure
+## Highlights
 
-```
-src/
-├── Core            # Domain entities and interfaces
-├── UseCases        # Business logic: Register, Login, etc.
-├── Infrastructure  # Identity + EF Core + repositories
-└── Presentation    # Controllers, DTOs, Middleware, Program.cs
-tests/
-├── Unit            # Use case testing
-└── Integration     # Full integration tests with WebApplicationFactory
-```
+- ASP.NET Core 9 + Identity + JWT
+- Role-based auth
+- Clean Architecture (Core / UseCases / Infra / Presentation)
+- Error responses with `ProblemDetails`
+- Functional, integration and unit tests
+- Swagger with token support
+- CI workflow with SonarCloud
 
 ---
 
-## 📌 Endpoints
+## Endpoints
 
-| Method | Route           | Access       | Description                         |
-|--------|------------------|--------------|-------------------------------------|
-| POST   | `/auth/register` | Public       | Register new user                   |
-| POST   | `/auth/login`    | Public       | Login and receive JWT token         |
-| GET    | `/me`            | Authenticated| Get current user profile            |
-| GET    | `/admin/users`   | Admin only   | Protected route with role-based auth|
-
----
-
-## 📎 JWT Token Payload
-
-```json
-{
-  "sub": "userId",
-  "email": "user@example.com",
-  "role": "Admin",
-  "iat": 1717171717,
-  "exp": 1717175317
-}
-```
+| Method | Route            | Auth | Description          |
+|--------|------------------|------|----------------------|
+| POST   | `/auth/register` | ❌   | Register new user    |
+| POST   | `/auth/login`    | ❌   | Login and get token  |
+| GET    | `/me`            | ✅   | Get current user     |
 
 ---
 
-## 🧪 Running Tests
+## License
 
-```bash
-dotnet test
-```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Includes:
-- ✅ Unit tests for each use case
-- ✅ Integration tests with authorization scenarios
-
----
-
-## 🚀 How to Run
-
-```bash
-dotnet run --project src/Presentation
-```
-
-Swagger will be available at: `https://localhost:{port}/swagger`
-
----
-
-## 📚 Why this matters
-
-Understanding authentication is critical for modern applications. This project demonstrates:
-
-- How to properly use ASP.NET Identity without scaffolding
-- How to structure code for testability and maintainability
-- How to protect APIs using JWT and role-based access control
-
----
