@@ -10,7 +10,7 @@ public class MeController(IGetCurrentUserUseCase getCurrentUserUseCase) : BaseCo
 {
     [HttpGet]
     [ProducesResponseType(typeof(GetCurrentUserResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetCurrentUser(CancellationToken cancellationToken)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
