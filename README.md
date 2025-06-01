@@ -25,17 +25,40 @@ Basic example of authentication and authorization using ASP.NET Core Identity an
 
 ## Endpoints
 
-| Method | Route            | Auth | Description          |
-|--------|------------------|------|----------------------|
-| POST   | `/auth/register` | ❌   | Register new user    |
-| POST   | `/auth/login`    | ❌   | Login and get token  |
-| GET    | `/users/me`            | ✅   | Get current user     |
-| GET    | `/health/liveness`  | ❌   | Checks if the application is running |
+| Method | Route               | Auth | Description                                                |
+| ------ | ------------------- | ---- | ---------------------------------------------------------- |
+| POST   | `/auth/register`    | ❌   | Register new user                                          |
+| POST   | `/auth/login`       | ❌   | Login and get token                                        |
+| GET    | `/users/me`         | ✅   | Get current user                                           |
+| GET    | `/health/liveness`  | ❌   | Checks if the application is running                       |
 | GET    | `/health/readiness` | ❌   | Checks if the application and its dependencies are healthy |
+
+---
+
+## Template Support
+
+This project can be used as a custom template with the `.NET CLI`.
+
+### 🛠️ Install template locally
+
+```bash
+dotnet new install .
+```
+
+### 📦 Generate a new project
+
+```bash
+dotnet new howto-auth -n HowTo.Useradmin
+```
+
+### 🧩 Available parameters
+
+| Parameter  | Default             | Description                                                         |
+| ---------- | ------------------- | ------------------------------------------------------------------- |
+| `--CiName` | `howto-auth-dotnet` | Used to replace the project name inside CI files (e.g., SonarCloud) |
 
 ---
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
