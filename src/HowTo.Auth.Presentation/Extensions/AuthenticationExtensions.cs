@@ -1,18 +1,9 @@
-using HowTo.Auth.Core.Entities;
-using HowTo.Auth.Infrastructure.Data;
+namespace HowTo.Auth.Presentation.Extensions;
 
-namespace HowTo.Auth.Presentation.Configurations;
-
-public static class IdentityConfigs
+public static class AuthenticationExtensions
 {
-    public static IServiceCollection AddIdentityConfigs(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddAuthenticationConfigurations(this IServiceCollection services, IConfiguration configuration)
     {
-        services
-            .AddIdentityCore<ApplicationUser>()
-            .AddRoles<ApplicationRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
-
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {

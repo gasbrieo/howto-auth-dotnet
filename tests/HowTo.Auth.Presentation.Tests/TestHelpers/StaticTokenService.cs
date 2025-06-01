@@ -1,6 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-
 namespace HowTo.Auth.Presentation.Tests.TestHelpers;
 
 public static class StaticTokenService

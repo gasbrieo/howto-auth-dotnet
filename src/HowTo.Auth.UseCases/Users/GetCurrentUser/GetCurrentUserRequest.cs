@@ -1,4 +1,4 @@
-namespace HowTo.Auth.UseCases.Me.GetCurrentUser;
+namespace HowTo.Auth.UseCases.Users.GetCurrentUser;
 
 public class GetCurrentUserRequest
 {
