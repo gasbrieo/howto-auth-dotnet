@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "gasbrieo",
+  "classifications": ["HowTo", "Auth", ".NET"],
+  "name": "HowTo.Auth (.NET 9 JWT API)",
+  "identity": "howto-auth",
+  "shortName": "howto-auth",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "HowTo.Auth",
+  "preferNameDirectory": true,
+  "symbols": {
+    "CiName": {
+      "type": "parameter",
+      "replaces": "howto-auth-dotnet",
+      "defaultValue": "howto-auth-dotnet"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            "**/.git/**",
+            "**/.vs/**",
+            "**/bin/**",
+            "**/obj/**",
+            "**/.db/**"
+          ]
+        }
+      ]
+    }
+  ]
+}
+
