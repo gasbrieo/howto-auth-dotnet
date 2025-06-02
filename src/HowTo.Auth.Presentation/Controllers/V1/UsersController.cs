@@ -7,7 +7,7 @@ namespace HowTo.Auth.Presentation.Controllers.V1;
 public class UsersController(IGetCurrentUserUseCase getCurrentUserUseCase) : BaseController
 {
     [HttpGet("me")]
-    [ProducesResponseType(typeof(PagedList<GetCurrentUserRequest>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GetCurrentUserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetCurrentUser(CancellationToken cancellationToken)
     {
